@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "crypto-hash-server"
+version = "0.1.0"
+description = "An application for hash/key generation"
+authors = ["Oleksii-Op <oleksii.oprish@gmail.com>"]
+readme = "README.md"
+license = "GNU GPL v2"
+packages = [{include = "crypto_hash_server"}]
+
+[tool.poetry.dependencies]
+python = "3.12.7"
+cryptography = "^44.0.2"
+fastapi = {extras = ["standard"], version = "^0.115.11"}
+pydantic-settings = "^2.8.1"
+pwdlib = {extras = ["argon2", "bcrypt"], version = "^0.2.1"}
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
