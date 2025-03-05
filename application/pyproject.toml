@@ -14,10 +14,26 @@ fastapi = {extras = ["standard"], version = "^0.115.11"}
 pydantic-settings = "^2.8.1"
 pwdlib = {extras = ["argon2", "bcrypt"], version = "^0.2.1"}
 
-
 [tool.poetry.group.dev.dependencies]
 black = "^25.1.0"
+pytest = "^8.3.5"
+pytest-asyncio = "^0.25.3"
+pytest-cov = "^6.0.0"
+mkdocs-material = "^9.6.7"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini.options]
+filterwarnign = ["ignore::DeprecationWarning"]
+
+[tool.coverage.run]
+omit = [
+    "core/config.py",
+    "core/schemas.py",
+    "response_docs/*",
+    "tests/*",
+    "main.py",
+    "__init__.py"
+]
