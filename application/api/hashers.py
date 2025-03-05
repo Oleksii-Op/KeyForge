@@ -32,7 +32,7 @@ async def random_hash() -> str:
 
 
 @router.post(
-    "/argon2-hash/",
+    "/argon2-hash",
     status_code=status.HTTP_201_CREATED,
     response_model=HashOut,
     summary="Create Argon2 Hash",
