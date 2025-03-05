@@ -5,7 +5,9 @@ from core.config import settings
 from fastapi.middleware.cors import CORSMiddleware
 
 
-app = FastAPI()
+app = FastAPI(
+    title=settings.project_name,
+)
 
 app.include_router(api_router)
 
@@ -25,4 +27,5 @@ if __name__ == "__main__":
         port=settings.runtime.port,
         reload=settings.runtime.reload,
         workers=settings.runtime.workers,
+        log_config="log_conf.yaml",
     )

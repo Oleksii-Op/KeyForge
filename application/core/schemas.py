@@ -5,6 +5,19 @@ class PrivateKeyOut(BaseModel):
     private_key: str
 
 
+class PublicKeyOut(BaseModel):
+    public_key: str
+
+
+class PasswordIn(BaseModel):
+    password: str | None = None
+
+
+class PrivateKeyIn(BaseModel):
+    public_key: str
+    password: str | None = None
+
+
 class HashOut(BaseModel):
     hash: str
 
@@ -20,3 +33,10 @@ class Argon2HashParams(BasePayload):
 
 class BcryptHashParams(BasePayload):
     rounds: int = Field(default=12, ge=8, le=32)
+
+
+class FileHashedResponse(BaseModel):
+    filename: str
+    algorithm: str
+    hash: str
+    size: int

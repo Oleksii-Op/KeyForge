@@ -1,43 +1,23 @@
-from typing import Any
-
 from fastapi import (
     UploadFile,
     APIRouter,
     status,
     HTTPException,
 )
-from pydantic import BaseModel
-
+from response_docs import TOO_LARGE_FILE
+from core.schemas import FileHashedResponse
 from core.hashengine import HashLibEnum, HashLib
 
 MiB_512 = 512 * 1024 * 1024  # Max size 512 MiB
 router = APIRouter(tags=["Files"])
 
-resp = {
-    status.HTTP_413_REQUEST_ENTITY_TOO_LARGE: {
-        "detail": "File is too large. Exceeds 512 MiB",
-        "content": {
-            "application/json": {
-                "example": {"detail": "File is too large. Exceeds 512 MiB"}
-            }
-        },
-    },
-}
-
-
-class FileHashedResponse(BaseModel):
-    filename: str
-    algorithm: str
-    hash: str
-    size: int
-
 
 @router.post(
-    "/file-sum/",
+    "/file-sum",
     status_code=status.HTTP_200_OK,
     summary="Upload a file",
     response_model=FileHashedResponse,
-    responses=resp,
+    responses=TOO_LARGE_FILE,
 )
 async def upload_file(
     algorithm: HashLibEnum,

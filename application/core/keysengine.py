@@ -6,6 +6,7 @@ from cryptography.hazmat.primitives.asymmetric import rsa, ed25519, dsa
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
+from fastapi import HTTPException
 
 
 class RSASizeEnum(int, Enum):
@@ -21,7 +22,7 @@ def gen_rsa_private_key_pem(password: str | None, key_size) -> str:
         key_size=key_size,
         backend=default_backend(),
     )
-    if password is None:
+    if password is None or password == "":
         encryption_algorithm = serialization.NoEncryption()
     else:
         encryption_algorithm = serialization.BestAvailableEncryption(
@@ -36,8 +37,26 @@ def gen_rsa_private_key_pem(password: str | None, key_size) -> str:
 
 
 def gen_rsa_ed25519_public_key_pem(
-    private_key: RSAPrivateKey | Ed25519PrivateKey,
+    pem: str,
+    password: str | None,
 ) -> str:
+    try:
+        private_key: RSAPrivateKey | Ed25519PrivateKey = (
+            serialization.load_pem_private_key(
+                pem.encode("utf-8"),
+                password=password.encode("utf-8") if password else None,
+            )
+        )
+    except ValueError:
+        raise HTTPException(
+            status_code=422,
+            detail="Could not deserialize key data. The data may be in an incorrect format.",
+        )
+    except TypeError:
+        raise HTTPException(
+            status_code=422,
+            detail="Password was given but private key is not encrypted.",
+        )
     public_key = private_key.public_key()
     public_pem = public_key.public_bytes(
         encoding=serialization.Encoding.PEM,
@@ -48,7 +67,7 @@ def gen_rsa_ed25519_public_key_pem(
 
 def gen_ed25519_private_key_pem(password: str | None) -> str:
     private_key = ed25519.Ed25519PrivateKey.generate()
-    if password is None:
+    if password is None or password == "":
         encryption_algorithm = serialization.NoEncryption()
     else:
         encryption_algorithm = serialization.BestAvailableEncryption(
