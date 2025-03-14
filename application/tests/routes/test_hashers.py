@@ -1,6 +1,8 @@
 from httpx import AsyncClient
 from fastapi import status
+from pydantic import ValidationError
 
+from tests.conftest import long_string
 import pytest
 from core.schemas import Argon2HashParams, BcryptHashParams
 
@@ -19,7 +21,11 @@ async def test_random_token(client: AsyncClient):
         (16, 65555),
     ],
 )
-async def test_argon2_hash(client: AsyncClient, length: int, memory_cost: int):
+async def test_argon2_hash(
+    client: AsyncClient,
+    length: int,
+    memory_cost: int,
+):
     params = Argon2HashParams(
         payload="somestring",
         length=length,
@@ -30,6 +36,26 @@ async def test_argon2_hash(client: AsyncClient, length: int, memory_cost: int):
         json=params.model_dump(),
     )
     assert response.status_code == status.HTTP_201_CREATED
+
+
+@pytest.mark.parametrize(
+    "length, memory_cost",
+    [
+        (16, 65555),
+    ],
+)
+@pytest.mark.asyncio
+async def test_too_long_payload_argon2(
+    client: AsyncClient,
+    length: int,
+    memory_cost: int,
+):
+    with pytest.raises(ValidationError):
+        params = Argon2HashParams(
+            payload=long_string,
+            length=length,
+            memory_cost=memory_cost,
+        )
 
 
 @pytest.mark.asyncio
@@ -51,6 +77,27 @@ async def test_bcrypt_hash(client: AsyncClient, payload: str, rounds: int):
         json=params.model_dump(),
     )
     assert response.status_code == status.HTTP_201_CREATED
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "payload, rounds",
+    [
+        ("sometext", 12),
+        ("sometext", 20),
+        ("sometext", 32),
+    ],
+)
+async def test_too_long_payload_brypt(
+    client: AsyncClient,
+    payload: str,
+    rounds: int,
+):
+    with pytest.raises(ValidationError):
+        params = BcryptHashParams(
+            payload=long_string,
+            rounds=rounds,
+        )
 
 
 @pytest.mark.asyncio
@@ -94,6 +141,27 @@ async def test_hashlib_hash(
         json={"payload": payload},
     )
     assert response.status_code == status.HTTP_201_CREATED
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "algorithm",
+    [
+        "sha512",
+        "sha256",
+        "sha384",
+        "md5",
+    ],
+)
+async def test_too_long_payload_hashlib(
+    client: AsyncClient,
+    algorithm: str,
+):
+    response = await client.post(
+        f"/api/hashlib?algorithm={algorithm}",
+        json={"payload": long_string},
+    )
+    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
 
 @pytest.mark.asyncio
