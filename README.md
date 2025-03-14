@@ -120,7 +120,6 @@ This ensures better performance monitoring, issue detection, and debugging capab
 PROJECT_NAME=KeyForge
 COLLECTOR_HOST=http://tempo
 COLLECTOR_PORT=4317
-SAMPLING_RATE=1
 FRONTEND_HOST=https://reverse-proxy/
 BACKEND_CORS_ORIGINS=http://prometheus/
 HEALTH_CHECK_ENDPOINT=wget --no-verbose --tries=1 -O /dev/null http://127.0.0.1:8000/utils/health-check || exit 1
