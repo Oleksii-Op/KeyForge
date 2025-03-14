@@ -11,5 +11,7 @@ router = APIRouter(
 async def health_check() -> Response:
     """
     Endpoint for Docker/Kubernetes Health Check.
+
+    :returns Response: status code 200
     """
     return Response(status_code=200)
