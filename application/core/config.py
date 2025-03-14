@@ -20,7 +20,7 @@ def parse_cors(v: Any) -> list[str] | str:
 class RunTime(BaseModel):
     host: str = "0.0.0.0"
     port: int = 8000
-    workers: int = 2
+    workers: int = 4
     reload: bool = False
 
 
