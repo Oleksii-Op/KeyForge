@@ -1,0 +1,593 @@
+{
+	"info": {
+		"_postman_id": "dbf763c4-4a62-4a38-b174-920f7e5b6ada",
+		"name": "KeyForge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43110059",
+		"_collection_link": "https://grey-eclipse-151234.postman.co/workspace/4cbbecf4-eccf-48ee-8ba8-5ebc4dfc22bc/collection/43110059-dbf763c4-4a62-4a38-b174-920f7e5b6ada?action=share&source=collection_link&creator=43110059"
+	},
+	"item": [
+		{
+			"name": "Key-generation",
+			"item": [
+				{
+					"name": "gen-rsa-1024-with-password",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"{{short_variable}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/genrsa-private-key?key_size=1024",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"genrsa-private-key"
+							],
+							"query": [
+								{
+									"key": "key_size",
+									"value": "1024"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen-ed25519-with-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"{{short_variable}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/gened25519-private-key",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"gened25519-private-key"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen-ed25519-no-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/gened25519-private-key",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"gened25519-private-key"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen-rsa-2048-no-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/genrsa-private-key?key_size=2048",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"genrsa-private-key"
+							],
+							"query": [
+								{
+									"key": "key_size",
+									"value": "2048"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen-rsa-4096-no-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/genrsa-private-key?key_size=4096",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"genrsa-private-key"
+							],
+							"query": [
+								{
+									"key": "key_size",
+									"value": "4096"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen-rsa-8192-no-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/genrsa-private-key?key_size=8192",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"genrsa-private-key"
+							],
+							"query": [
+								{
+									"key": "key_size",
+									"value": "8192"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen_encrypted_public_rsa_key",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"private_key\": \"{{encrypted_rsa_private_key}}\",\n  \"password\": \"{{short_variable}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/gen-public-key",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"gen-public-key"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen_public_rsa_key",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"private_key\": \"{{rsa_private_key}}\",\n  \"password\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/gen-public-key",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"gen-public-key"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen_public_ed25519_key",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"private_key\": \"{{ed25519_private_key}}\",\n    \"password\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/gen-public-key",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"gen-public-key"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen_encrypted_public_ed25519_key",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"private_key\": \"{{encrypted_ed25519_private_key}}\",\n    \"password\": \"{{short_variable}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/gen-public-key",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"gen-public-key"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Hashers",
+			"item": [
+				{
+					"name": "gen-rand-token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost/api/random-token",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"random-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen-argon2-hash",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payload\": \"{{short_variable}}\",\n    \"length\": 32,\n    \"memory_cost\": 100000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/argon2-hash",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"argon2-hash"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen-bcrypt-hash",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payload\": \"{{short_variable}}\",\n    \"rounds\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/bcrypt-hash",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"bcrypt-hash"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen-sha256-hash",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payload\": \"{{short_variable}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/hashlib?algorithm=sha256",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"hashlib"
+							],
+							"query": [
+								{
+									"key": "algorithm",
+									"value": "sha256"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen-sha384-hash",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payload\": \"{{short_variable}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/hashlib?algorithm=sha384",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"hashlib"
+							],
+							"query": [
+								{
+									"key": "algorithm",
+									"value": "sha384"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen-md5-hash",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payload\": \"{{short_variable}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/hashlib?algorithm=md5",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"hashlib"
+							],
+							"query": [
+								{
+									"key": "algorithm",
+									"value": "md5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gen-sha512-hash",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payload\": \"{{short_variable}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost/api/hashlib?algorithm=sha512",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"hashlib"
+							],
+							"query": [
+								{
+									"key": "algorithm",
+									"value": "sha512"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "short_variable",
+			"value": "qwerty",
+			"type": "string"
+		},
+		{
+			"key": "long_variable",
+			"value": "2c6c68ebee48c28ba60de4cf980032dc0f5fd06fa4681922d17f5\"\n    \"0a4facd6f3d5da9a88f8e20f20a32beed6d3be328de13f2f17409\"\n    \"44ac4ef8ed70cd63680442b9243e259b2a6ff213fb21e98518046\"\n    \"a298f4b329653354f5d55b957f5b6be819a237503c9c2071c4578\"\n    \"b6d3b2be0c5925b32de75c1bd58366fb58cd525af28d79dca501b3\"\n    \"cc86ca82dce54310a8eee863062d01e623640617fe382c354c46dc\"\n    \"7e1b56c4687ff3a291d0c3aac5da10fde7588317c5c1f3a72175b4\"\n    \"acabe5c9d4da55f7cd94dce22615de1acd3cc3050fd557e36142a43\"\n    \"f37ec51f8ecf2612bdc07e555ad1c6ec185736eac436e69544a0121\"\n    \"a0f5fb584b8e83e5127885e027da77e26a39b5ce2b86b75fb620be8\"\n    \"d2d8ef6e2ac1e14356edcb7c5d6524b4b125f98bf96d80ef441bf27\"\n    \"96f56bhf9383jksk02lkdnu93u93dsdsbyv8yf7tv6vsiskjdv6t6d8s\"\n    \"2c6c68ebee48c28ba60de4cf980032dc0f5fd06fa4681922d17f5\"\n    \"0a4facd6f3d5da9a88f8e20f20a32beed6d3be328de13f2f17409",
+			"type": "string"
+		},
+		{
+			"key": "encrypted_rsa_private_key",
+			"value": "-----BEGIN ENCRYPTED PRIVATE KEY-----\\nMIIC5TBfBgkqhkiG9w0BBQ0wUjAxBgkqhkiG9w0BBQwwJAQQmjjAkcwPQsDfZWjv\\nV9tK/QICCAAwDAYIKoZIhvcNAgkFADAdBglghkgBZQMEASoEEDvvb0d+8KXZL+Ej\\nIvldJjIEggKAcvIRI3SHyQf1bKl1eKKWdrwsH472WDbGCD2fJSF1bxSWQulBOg45\\n8MLEhgGeBW/2PkRiYrlZdCDq25s2WxH52xflP6FZKQot55VEtQQu/vAQEusLul1P\\nQziV8z0F8w0HbMDb8Mj0oMB0cLPb50ErHj1tn3I/CucEzzIwOQRksMUwumh081Ir\\n4ORw9bGsEg67I5P/biN+CUiReYGflLVv+NaLoxXuWbFutpfL80VhUKox/bK8NGxR\\nbgsolnpz+4eDrS0BTkwLshdiO1ATAWH2aKuduHL8vsJBrv7QXR7QlTvUgTdR+1ty\\nIpQ/wv9MB0J5wJSb6I7cpyudSRBB5O8BS539ib7u3oB1olp4sDhHAeUEmQV3yDDX\\nSRKtsSAt80WRfXd/6j4Y/OmeZ7evgmH499RiV5aUW+/arPub2xUOA9UhWB68VALT\\nhAJnV+dGBIrYfafM3yq2jp++u39TyBCvX5ElaWzSJkkNXAK5+Z4oHhmRNKf3TaMB\\n81AG4jHfutCRavWfyKG5KYjbrwJZdTCFW9LDbEfuHIhDXqBr9xzEqzrpeJgYsGtd\\nnvyM5HuBYwV1WTakQojMvFB8x8OaXe8kRkxXF/ALRwpStaqV6W/W7XtzFFfZ43t7\\nUpTlHMTcLFoRm41/2pAW9yOh3NFS+ItQAG/IeSX0T09J4mrYLkot9ktizaeXF6Uc\\n7lulWbrqY0b/KgTi8T38AEJ8oQO90sXSzKFHlUtEuOs75skncMKMDVn9L6blDSu1\\nMFTk4/QTVMmmwDNk0FmXBN+ED4e/CTeMOYBRVoCIcLHjtz0vFoz+qqQyOIILAyLq\\n/O2UuJuHUH7vhaZyJdKB2bXrPTYFCUj23g==\\n-----END ENCRYPTED PRIVATE KEY-----\\n",
+			"type": "string"
+		},
+		{
+			"key": "rsa_private_key",
+			"value": "-----BEGIN PRIVATE KEY-----\\n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\\nZYOR4W9yrZbMKt4YpU2SvWhiwt/yj+g=\\n-----END PRIVATE KEY-----\\n",
+			"type": "string"
+		},
+		{
+			"key": "encrypted_ed25519_private_key",
+			"value": "-----BEGIN ENCRYPTED PRIVATE KEY-----\\nMIGjMF8GCSqGSIb3DQEFDTBSMDEGCSqGSIb3DQEFDDAkBBAjRYxYvv5V+KjCwx3I\\n0ZVaAgIIADAMBggqhkiG9w0CCQUAMB0GCWCGSAFlAwQBKgQQTgNpyWorjTB4RsXQ\\nrXdB3ARA2JEVJ1yoAx5QJrQjfaTdN2G0gZkViATfLVbmyG5A1zy2hlwL/RpXr61z\\ndSxmAsqKG/HFvvQ3rST1hpFJh7eiFg==\\n-----END ENCRYPTED PRIVATE KEY-----\\n",
+			"type": "string"
+		},
+		{
+			"key": "ed25519_private_key",
+			"value": "-----BEGIN PRIVATE KEY-----\\nMC4CAQAwBQYDK2VwBCIEIDsliU4nY6s4Sg0OPp71eHjUdLWaSdvC8OfDsSWfQK49\\n-----END PRIVATE KEY-----\\n",
+			"type": "string"
+		}
+	]
+}
