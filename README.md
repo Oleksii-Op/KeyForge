@@ -102,30 +102,57 @@ This ensures better performance monitoring, issue detection, and debugging capab
 
 1. [Loki Docker Driver](https://grafana.com/docs/loki/latest/clients/docker-driver/) is required.
    ```shell
-   docker plugin install grafana/loki-docker-driver:2.9.2 --grant-all-permissions
+   docker plugin install grafana/loki-docker-driver:2.9.2 --alias loki --grant-all-permissions
    ```
-2. Create .env files for backend and frontend
+2. Create .env files for backend and frontend and docker compose
   Those are required and will be overwritten by docker-compose env variables.
   ```shell
-  /crypto-hash-server/application$ cp .env.template .env
+  /KeyForge/application$ cp .env.template .env
   cd ../frontend
-  /crypto-hash-server/frontend$ cp .env.template .env
+  /KeyForge/frontend$ cp .env.template .env
+  cd ..
+  /KeyForge/$ cp .env.template .env
   ```
 
 3. Verify .env file in the root directory for docker-compose.yaml
+```shell
+# APP COMMON
+PROJECT_NAME=KeyForge
+COLLECTOR_HOST=http://tempo
+COLLECTOR_PORT=4317
+SAMPLING_RATE=1
+FRONTEND_HOST=https://reverse-proxy/
+BACKEND_CORS_ORIGINS=http://prometheus/
+HEALTH_CHECK_ENDPOINT=wget --no-verbose --tries=1 -O /dev/null http://127.0.0.1:8000/utils/health-check || exit 1
+
+# Backend 1
+# service name is hardcoded in nginx.conf and grafana dashboards
+# change these above if the service name is to be changed
+SERVICE_NAME_1=app-a
+REPLICA_ID_1=1
+
+# Backend 2
+# service name is hardcoded in nginx.conf and grafana dashboards
+# change these above if the service name is to be changed
+SERVICE_NAME_2=app-b
+REPLICA_ID_2=2
+```
 
 4. Run the services
   ```shell
   docker compose up -d  
   ```
 5. View the main page [https://localhost/](https://localhost/)
+> [!NOTE]
+> Your browser may complain about self-signed certificate, just accept.
 
 6. Log into Grafana [https://localhost:3000/](https://localhost:3000/)
 ```shell
 username: admin
 password: qwerty
 ```
-
+> [!NOTE]
+> Your browser may complain about self-signed certificate, just accept.
 
 ## 🌐 API Endpoints
 
