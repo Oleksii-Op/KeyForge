@@ -188,45 +188,56 @@ The application communicates with a backend API with the following endpoints:
 
 
 
-## 📄 License
+## 📊 Load Testing and Performance Optimization
 
-This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the LICENSE file for details.
+### Performance Issues Identified
+During extensive load testing, performance bottlenecks were identified
+in the FastAPI backend, particularly with computationally intensive operations like RSA key generation.
 
+#### Test Environment
+- Backend: FastAPI with 4 Uvicorn workers per container
+- Deployment: Docker containers behind NGINX reverse proxy
+- Load Balancing: Round-robin strategy
+- Testing: Concurrent API requests using bash script simulating high user demand
 
-## Load Testing and Performance Issues with FastAPI and RSA Key Generation
+#### Key Issue
+Under high load, especially with requests for 8192-bit RSA key generation,
+the backend exhibited significant strain, sometimes leading to service degradation or failure.
 
-### Overview
-During load testing, a performance issue was identified in a FastAPI-based
-backend running behind an NGINX reverse proxy with round-robin load balancing.
-The backend consists of two Docker containers, each running four Uvicorn workers.
+### ⚡ Solutions
 
-A Bash script simulates high-load scenarios by sending asynchronous API requests,
-including computationally expensive RSA key generation (up to 8192-bit keys).
-Under extreme conditions, this heavy load causes the backends to crash.
+<div align="center">
 
-### Consequences?
+| Solution | Implementation                                           | Benefit/Disadvantages                                               | Impact |
+|----------|----------------------------------------------------------|---------------------------------------------------------------------|--------|
+| **API Rate Limiting** | `fastapi-limiter` with Redis                             | Prevents resource exhaustion, but useless in case of DDoS           | ⭐⭐⭐ |
+| **Worker Scaling** | Optimized Uvicorn workers or increase container replicas | Improved request handling                                           | ⭐⭐⭐⭐ |
+| **Lambda Offloading** | AWS Lambda for key generation                            | Isolated resource-intensive operations                              | ⭐⭐⭐⭐⭐ |
+| **Key Caching** | Redis-based key pre-generation                           | Reduced computation overhead, but useless if a user uses a password | ⭐⭐⭐⭐ |
 
-Potential Denial of Service (DoS) vulnerability.
-
-### Possible Solutions
-
-1. Rate Limiting
-Implement fastapi-limiter to restrict access to resource-intensive endpoints.
-This can mitigate DoS attacks but is ineffective against DDoS.
-
-2. Worker Scaling
-Increase backend replicas or Uvicorn workers to distribute the load.
-While this improves capacity, it does not eliminate the computational bottleneck.
-
-3. Offloading RSA Generation to AWS Lambda
-Move RSA key generation to an AWS Lambda function, offloading 
-the computational workload to a scalable cloud service.
-This is one of the best solutions.
-
-4. Pre-Generated Keys in Redis
-Create a separate backend that pre-generates and stores RSA keys in Redis.
-This reduces real-time computation but is ineffective if a user requires password-based encryption.
+</div>
 
 ### Conclusion
 The best approach is to offload RSA key generation to a scalable 
-cloud function like AWS Lambda while maintaining monitoring and tracing for improved observability.
+cloud function like AWS Lambda while maintaining monitoring and 
+tracing for improved observability.
+
+
+## 📄 License
+
+This project is licensed under the GNU General Public License v3.0 (GPL-3.0) - see the [LICENSE](LICENSE) file for details.
+
+<div align="center">
+  <img src="https://www.gnu.org/graphics/gplv3-with-text-136x68.png" alt="GPL v3 Logo">
+</div>
+
+### License Summary
+
+- **Freedom to use**: Run the software for any purpose
+- **Freedom to study**: Examine and modify the source code
+- **Freedom to share**: Redistribute the software
+- **Freedom to modify**: Improve the software and release improvements
+
+The GPL-3.0 is a copyleft license that requires anyone who distributes
+this code or derivative works to make the source available under the same terms.
+This ensures that all users receive the same freedoms.
