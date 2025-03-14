@@ -1,10 +1,27 @@
 # KeyForge - Modern Cryptographic Toolkit
 
-
 KeyForge is a modern, user-friendly web application that provides powerful 
 cryptographic tools with an intuitive interface. The application allows users
 to generate secure cryptographic keys, create hashes, and verify file 
 integrity using industry-standard algorithms.
+
+## 📑 Quick Navigation
+
+- [Features](#-features)
+  - [Hash Generation](#hash-generation)
+  - [Key Generation](#key-generation)
+  - [File Checksum](#file-checksum)
+- [Technology Stack](#-technology-stack)
+  - [Frontend](#frontend)
+  - [Backend](#backend)
+  - [Reverse Proxy](#reverse-proxy)
+  - [Observability](#observability)
+- [Architecture](️#-architecture)
+- [Security Considerations](#-security-considerations)
+- [Getting Started](#-getting-started)
+- [API Endpoints](#-api-endpoints)
+- [Load Testing and Performance](#-load-testing-and-performance-optimization)
+- [License](#-license)
 
 ## 🔐 Features
 
