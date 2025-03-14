@@ -1,0 +1,4 @@
+include:
+  - docker-compose.monitoring.yaml
+  - docker-compose.backends.yaml
+  - docker-compose.proxy.yaml

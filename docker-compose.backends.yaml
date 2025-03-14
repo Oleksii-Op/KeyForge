@@ -1,0 +1,48 @@
+services:
+  app-a:
+    build:
+      context: ./application
+      dockerfile: Dockerfile
+      tags:
+        - "keyforge/backend:0.1.0"
+    restart: unless-stopped
+    container_name: app-a
+    environment:
+      APP_CONFIG__PROJECT_NAME: ${PROJECT_NAME}
+      APP_CONFIG__OPTL__SERVICE_NAME: ${SERVICE_NAME_1}
+      APP_CONFIG__OPTL__REPLICA_ID: ${REPLICA_ID_1}
+      APP_CONFIG__OPTL__COLLECTOR_HOST: ${COLLECTOR_HOST}
+      APP_CONFIG__OPTL__COLLECTOR_PORT: ${COLLECTOR_PORT}
+      APP_CONFIG__OPTL__SAMPLING_RATE: ${SAMPLING_RATE}
+      APP_CONFIG__FRONTEND_HOST: ${FRONTEND_HOST}
+      BACKEND_CORS_ORIGINS: ${BACKEND_CORS_ORIGINS}
+    healthcheck:
+      test: ${HEALTH_CHECK_ENDPOINT}
+    depends_on:
+      - loki
+    ports:
+      - "8000"
+
+  app-b:
+    build:
+      context: ./application
+      dockerfile: Dockerfile
+      tags:
+        - "keyforge/backend:0.1.0"
+    restart: unless-stopped
+    container_name: app-b
+    environment:
+      APP_CONFIG__PROJECT_NAME: ${PROJECT_NAME}
+      APP_CONFIG__OPTL__SERVICE_NAME: ${SERVICE_NAME_2}
+      APP_CONFIG__OPTL__REPLICA_ID: ${REPLICA_ID_2}
+      APP_CONFIG__OPTL__COLLECTOR_HOST: ${COLLECTOR_HOST}
+      APP_CONFIG__OPTL__COLLECTOR_PORT: ${COLLECTOR_PORT}
+      APP_CONFIG__OPTL__SAMPLING_RATE: ${SAMPLING_RATE}
+      APP_CONFIG__FRONTEND_HOST: ${FRONTEND_HOST}
+      BACKEND_CORS_ORIGINS: ${BACKEND_CORS_ORIGINS}
+    healthcheck:
+      test: ${HEALTH_CHECK_ENDPOINT}
+    depends_on:
+      - loki
+    ports:
+      - "8000"
