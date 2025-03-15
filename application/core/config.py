@@ -26,10 +26,9 @@ class RunTime(BaseModel):
 
 class OPTLSettings(BaseModel):
     service_name: str
-    replica_id: int
+    replica_id: str
     collector_host: str
     collector_port: int
-    sampling_rate: int
 
     @property
     def collector(self) -> str:
