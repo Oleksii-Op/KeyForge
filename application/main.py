@@ -59,7 +59,7 @@ if __name__ == "__main__":
         host=settings.runtime.host,
         port=settings.runtime.port,
         reload=settings.runtime.reload,
-        workers=settings.runtime.workers,
+        workers=settings.workers.workers,
         log_config=log_config,
         proxy_headers=True,
         forwarded_allow_ips="*",

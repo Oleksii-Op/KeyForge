@@ -2,7 +2,9 @@ ARG PYTHON_VERSION=3.12.7
 
 FROM python:${PYTHON_VERSION}-slim
 
-LABEL description="KeyForge"
+LABEL name="KeyForge" \
+      version="0.1.1" \
+      description="FastAPI Backend Image Modern Cryptographic Toolkit"
 
 ENV POETRY_VERSION=1.8.3
 
@@ -14,6 +16,7 @@ RUN apt-get update -y \
 
 WORKDIR /app/
 
+# Copy everything to /app/ in the container
 COPY . .
 
 RUN poetry config virtualenvs.in-project true \
@@ -25,4 +28,6 @@ USER backend
 
 EXPOSE 8000
 
-CMD ["poetry", "run", "python", "main.py"]
+ENTRYPOINT ["poetry", "run"]
+
+CMD ["python", "main.py"]

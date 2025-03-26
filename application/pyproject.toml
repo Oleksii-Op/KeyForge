@@ -19,6 +19,7 @@ opentelemetry-instrumentation-fastapi = "^0.51b0"
 opentelemetry-exporter-otlp = "^1.30.0"
 prometheus-fastapi-instrumentator = "^7.0.2"
 opentelemetry-instrumentation-logging = "^0.51b0"
+pytest-xdist = {extras = ["psutil"], version = "^3.6.1"}
 
 [tool.poetry.group.dev.dependencies]
 black = "^25.1.0"
