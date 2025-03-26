@@ -20,8 +20,11 @@ def parse_cors(v: Any) -> list[str] | str:
 class RunTime(BaseModel):
     host: str = "0.0.0.0"
     port: int = 8000
-    workers: int = 4
     reload: bool = False
+
+
+class WorkersConfig(BaseModel):
+    workers: int
 
 
 class OPTLSettings(BaseModel):
@@ -49,6 +52,7 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
     )
     runtime: RunTime = RunTime()
+    workers: WorkersConfig
     prefix: ApiPrefix = ApiPrefix()
     project_name: str
     optl: OPTLSettings
