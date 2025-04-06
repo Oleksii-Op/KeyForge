@@ -2,6 +2,7 @@ import logging
 
 from fastapi import FastAPI
 import uvicorn
+from fastapi.responses import ORJSONResponse
 
 from api import router as api_router
 from core.config import settings
@@ -10,6 +11,8 @@ from prometheus_fastapi_instrumentator import Instrumentator
 
 from utils import setting_otlp
 from utils.healthcheck import router as healthcheck_router
+from exc_handler import exception_handler
+import orjson
 
 
 class EndpointFilter(logging.Filter):
@@ -24,6 +27,7 @@ logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
 
 app = FastAPI(
     title=settings.project_name,
+    default_response_class=ORJSONResponse,
 )
 
 # Setting OpenTelemetry exporter
@@ -45,6 +49,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+exception_handler(app=app)
 
 
 if __name__ == "__main__":
