@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-configmap
+  namespace: {{ .Values.namespace }}
+data:
+  backend-base-url: |
+    http://{{ .Values.serviceNames.backendService }}:8000

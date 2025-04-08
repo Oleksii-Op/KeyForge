@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deploymentNames.backendDeployment }}
+  labels:
+    app: {{ .Values.backend.config.selector }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.backend.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.backend.config.selector }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.backend.config.selector }}
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: backend
+        image: {{ .Values.backend.image }}
+        envFrom:
+        - configMapRef:
+            name: backend-configmap
+        livenessProbe:
+          httpGet:
+            path: /utils/health-check
+            port: 8000
+          initialDelaySeconds: 15
+          failureThreshold: 3
+          periodSeconds: 15
+        resources:
+          limits:
+            cpu: "1000m"
+            memory: "1024Mi"
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+
+

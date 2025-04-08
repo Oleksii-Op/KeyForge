@@ -1,0 +1,100 @@
+fullnameOverride: "promstack"
+cleanPrometheusOperatorObjectNames: true
+grafana:
+  namespaceOverride: grafana
+  defaultDashboardsEnabled: true
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: minikube-ca
+    hosts: [grafana.keyforge]
+    tls: [{hosts: [grafana.keyforge], secretName: grafana-cert}]
+  sidecar:
+    dashboards: {enabled: true}
+    datasources:
+      enabled: true
+      defaultDatasourceEnabled: false
+
+  # Grafana Provisioning docs:
+  # https://grafana.com/docs/grafana/latest/administration/provisioning/
+  additionalDataSources:
+  - name: Tempo
+    uid: tempo
+    orgId: 1
+    type: tempo
+    typeName: Tempo
+    access: proxy
+    url: http://tempo.grafana:3100
+    password: ''
+    user: ''
+    database: ''
+    basicAuth: false
+    isDefault: false
+    jsonData:
+      nodeGraph:
+        enabled: true
+      search:
+        hide: false
+      lokiSearch:
+        datasourceUid: "loki"
+      tracesToLogs:
+        datasourceUid: loki
+        filterBySpanID: false
+        filterByTraceID: true
+        mapTagNamesEnabled: false
+        tags:
+          - pod
+#        tags:
+#        - key: service.name
+#          value: service_name
+#        - key: span.name
+#          value: operation
+      serviceMap:
+        datasourceUid: 'prometheus'
+#  - name: Loki
+#    uid: loki
+#    orgId: 1
+#    type: loki
+#    typeName: Loki
+#    access: proxy
+#    url: http://loki.grafana:3100
+#    password: ''
+#    user: ''
+#    database: ''
+#    basicAuth: false
+#    isDefault: false
+#    jsonData:
+#      derivedFields:
+#        - datasourceUid: tempo
+#          matcherRegex: (?:trace_id)=(\w+)
+#          name: TraceID
+#          url: $${__value.raw}
+#    readOnly: false
+#    editable: true
+#  - name: Prometheus
+#    uid: prometheus
+#    type: prometheus
+#    url: http://promstack-prometheus.prometheus:9090
+#    jsonData:
+#      prometheusType: Prometheus
+#      exemplarTraceIdDestinations:
+#        - datasourceUid: tempo
+#          name: trace_id
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: { }
+    enableRemoteWriteReceiver: true
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: standard
+          resources:
+            requests:
+              storage: 10Gi
+    additionalArgs:
+      - name: enable-feature
+        value: exemplar-storage
+
+prometheus-node-exporter:
+  namespaceOverride: kube-system

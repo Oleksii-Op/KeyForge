@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  BACKEND_CORS_ORIGINS: "{{ .Values.backend.config.envs.cors_origins }}"
+  APP_CONFIG__OPTL__COLLECTOR_HOST: "{{ .Values.backend.config.envs.optl_collector_host }}"
+  APP_CONFIG__OPTL__COLLECTOR_PORT: "{{ .Values.backend.config.envs.optl_collector_port }}"
+  APP_CONFIG__FRONTEND_HOST: "{{ .Values.backend.config.envs.frontend_host }}"  # Ingress URI
+  APP_CONFIG__PROJECT_NAME: "{{ .Values.backend.config.envs.project_name }}"
+  APP_CONFIG__OPTL__REPLICA_ID: "{{ .Values.backend.config.envs.replica_id }}"
+  APP_CONFIG__OPTL__SERVICE_NAME: "{{ .Values.backend.config.envs.service_name }}"
+  APP_CONFIG__WORKERS__WORKERS: "{{ .Values.backend.config.envs.workers }}"
+kind: ConfigMap
+metadata:
+  name: backend-configmap
+  namespace: {{ .Values.namespace }}

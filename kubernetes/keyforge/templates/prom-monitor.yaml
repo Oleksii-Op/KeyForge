@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: metrics-monitor
+  labels:
+   app: metrics-monitor
+  namespace: {{ .Values.namespace }}
+spec:
+  endpoints:
+    - scrapeTimeout: 30s
+      targetPort: 8000
+      path: /metrics
+      honorLabels: true
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - {{ .Values.namespace }}
+  selector:
+    matchLabels:
+      app: {{ .Values.backend.config.selector }}

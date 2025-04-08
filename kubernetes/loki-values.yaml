@@ -1,0 +1,23 @@
+loki:
+  enabled: true
+  isDefault: false
+#  url: http://{{(include "loki.serviceName" .)}}:{{ .Values.loki.service.port }}
+  url: "http://loki.grafana:3100/"
+  datasource:
+    uid: ""
+    jsonData: |
+      {
+        "derivedFields": [
+          {
+            "datasourceUid": "tempo",
+            "matcherRegex": "(?:trace_id)=(\\w+)",
+            "name": "TraceID",
+            "url": "$${__value.raw}"
+          }
+        ]
+      }
+    readOnly: false
+    editable: true
+
+grafana:
+    enabled: false
