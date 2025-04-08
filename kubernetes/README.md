@@ -10,7 +10,6 @@
 - [Accessing the Application](#-accessing-the-application)
 - [Monitoring & Observability](#-monitoring--observability)
 - [Troubleshooting](#-troubleshooting)
-- [Resource Requirements](#-resource-requirements)
 - [License](#-license)
 
 ## 🌟 Overview
@@ -108,11 +107,22 @@ helm upgrade --install loki --namespace=grafana grafana/loki-stack --set loki.im
 helm upgrade --install keyforge keyforge/
 ```
 
+## 9. Modify /etc/hosts file
+```bash
+echo $(minikube ip) crypto.example | sudo tee -a /etc/hosts
+echo $(minikube ip) grafana.keyforge | sudo tee -a /etc/hosts
+```
+
+## 10. Get Grafana credentials
+```bash
+kubectl get secret --namespace grafana prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d; echo
+```
+
 ## 🔍 Accessing the Application
 
 After installation, access:
-- 🌐 Frontend: `http://keyforge.local/`
-- 📊 Grafana Dashboard: `http://grafana.keyforge/`
+- 🌐 Frontend: `https://crypto.example/`
+- 📊 Grafana Dashboard: `https://grafana.keyforge/`
 
 ## 📈 Monitoring & Observability
 
@@ -128,11 +138,3 @@ After installation, access:
 - **Grafana Connection**: Ensure Loki is deployed with version 2.9.3
 - **Certificate Issues**: Verify cert-manager installation
 - **Pod Startup Failures**: Check resource and health probe configurations
-
-
-## 💻 Resource Requirements
-
-| Component | CPU Request | Memory Request | CPU Limit | Memory Limit |
-|-----------|-------------|----------------|-----------|--------------|
-| Frontend  | 500m        | 512Mi          | 1000m     | 1024Mi       |
-| Backend   | 500m        | 512Mi          | 1000m     | 1024Mi       |
