@@ -21,6 +21,7 @@ integrity using industry-standard algorithms.
 - [Getting Started](#-getting-started)
 - [API Endpoints](#-api-endpoints)
 - [Load Testing and Performance](#-load-testing-and-performance-optimization)
+- [Deploy in Kubernetes](#Kubernetes)
 - [License](#-license)
 
 ## 🔐 Features
@@ -238,6 +239,10 @@ the backend exhibited significant strain, sometimes leading to service degradati
 The best approach is to offload RSA key generation to a scalable 
 cloud function like AWS Lambda while maintaining monitoring and 
 tracing for improved observability.
+
+## Kubernetes
+### Please refer to this README.md file in `k8s-deploy` [branch](https://github.com/Oleksii-Op/KeyForge/tree/k8s-deploy/kubernetes)
+
 
 
 ## 📄 License
