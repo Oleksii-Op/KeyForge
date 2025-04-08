@@ -1,1 +1,4 @@
 node_modules
+Dockerfile
+otel_ngx_module.so
+bun.lockb

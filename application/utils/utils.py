@@ -5,7 +5,9 @@ from opentelemetry.instrumentation.logging import LoggingInstrumentor
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.sdk.trace.sampling import ParentBased, ALWAYS_OFF, ALWAYS_ON
+from opentelemetry.sdk.trace.sampling import (
+    TraceIdRatioBased,
+)
 from starlette.types import ASGIApp
 
 
@@ -65,9 +67,12 @@ def setting_otlp(
     # set the tracer provider
     tracer = TracerProvider(
         resource=resource,
-        sampler=ParentBased(
-            root=ALWAYS_OFF,
-            remote_parent_sampled=ALWAYS_ON,
+        # sampler=ParentBased(
+        #     root=ALWAYS_OFF,
+        #     remote_parent_sampled=ALWAYS_ON,
+        # ),
+        sampler=TraceIdRatioBased(
+            rate=1,
         ),
     )
 
